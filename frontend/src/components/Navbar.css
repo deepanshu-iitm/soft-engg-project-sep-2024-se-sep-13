@@ -1,0 +1,133 @@
+.navbar {
+    width: 100%;
+    background-color: #ffffff; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 0.5rem 0;
+}
+
+.navbar-container {
+    max-width: 1300px; 
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 3rem;
+}
+
+.navbar-logo {
+    margin-right: 5rem;
+}
+
+.navbar-logo a {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333333; 
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    transition: color 0.3s ease;
+}
+
+.navbar-logo a:hover {
+    color: #4CAF50; 
+}
+
+.navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 3rem; 
+    margin: 0; 
+}
+
+.navbar-links li {
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar-links a {
+    text-decoration: none;
+    color: #333333;
+    transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+    color: #4CAF50; 
+}
+
+
+.navbar-signup {
+    margin-left: 6rem;
+    margin-right: auto; 
+}
+
+.signup-btn {
+    background-color: #4CAF50; 
+    color: white;
+    padding: 0.7rem 1.8rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Lato', sans-serif;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.signup-btn:hover {
+    background-color: #388e3c; 
+}
+
+@media (min-width: 1200px) {
+    .navbar-container {
+        padding: 1rem 3rem; 
+    }
+}
+@media (max-width: 768px) {
+    .navbar-links {
+        display: none; 
+    }
+
+    .navbar-signup {
+        margin-left: 0; 
+        margin-right: 0; 
+    }
+
+    .dropdown {
+        position: relative; 
+    }
+
+    .dropdown-toggle {
+        background: none; 
+        border: none;
+        font-size: 2rem; 
+        cursor: pointer; 
+    }
+
+    .dropdown-menu {
+        display: flex;
+        flex-direction: column; 
+        position: absolute; 
+        top: 100%;
+        left: 0; 
+        background: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        padding: 1rem; 
+        z-index: 10; 
+    }
+
+    .dropdown-menu li {
+        margin-bottom: 0.5rem; 
+    }
+
+    .dropdown-menu li:last-child {
+        margin-bottom: 0;
+    }
+
+    .navbar-links.desktop-menu {
+        display: none; 
+    }
+}
