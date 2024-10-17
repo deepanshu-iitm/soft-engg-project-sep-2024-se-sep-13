@@ -1,0 +1,104 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .dashboard-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+  
+  .dashboard-header p {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+  }
+  
+  .dashboard-content {
+    display: flex;
+    margin: 2rem;
+  }
+  
+  .dashboard-sidebar {
+    width: 250px;
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 10px;
+  }
+  
+  .dashboard-sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .dashboard-sidebar ul li {
+    margin: 1.5rem 0;
+  }
+  
+  .dashboard-sidebar ul li a {
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .dashboard-sidebar ul li a:hover {
+    color: #667eea;
+  }
+  
+  .dashboard-main {
+    flex-grow: 1;
+    margin-left: 2rem;
+  }
+  
+  .milestone-section, .github-section, .tasks-section {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+  }
+  
+  .milestone-section h2, .github-section h2, .tasks-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+  
+  .milestone-section {
+    background-color: #f0f4f8;
+  }
+  
+  .github-section {
+    background-color: #f8f9fa;
+  }
+  
+  .tasks-section {
+    background-color: #ffffff;
+  }
+  
+  .milestone-section .milestone-item, .tasks-section .task-item {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1rem;
+  }
+  
+  .milestone-item h3, .task-item h3 {
+    color: #333;
+    font-size: 1.2rem;
+  }
+  
+  .milestone-item p, .task-item p {
+    color: #666;
+    font-size: 1rem;
+  }
+  

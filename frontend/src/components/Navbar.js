@@ -1,31 +1,65 @@
-import React, { useState } from "react";
+import React from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { logout } from './apiService'; 
 import './Navbar.css';
 
 const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false); 
-  
-    const toggleDropdown = () => {
-      setIsOpen(!isOpen); 
-    };
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/signup-login');
+  };
+
+  const renderNavbarContent = () => {
+    const path = location.pathname;
+
+    if (path === '/signup-login') {
+      return (
+        <div className="navbar-container">
+          <div className="navbar-logo">
+            <Link to="/">ProjectTracker</Link>
+          </div>
+        </div>
+      );
+    }
+
+    if (path.startsWith('/instructor-dashboard') || path.startsWith('/student-dashboard')) {
+      return (
+        <div className="navbar-container">
+          <div className="navbar-logo">
+            <Link to="/">ProjectTracker</Link>
+          </div>
+          <div className="navbar-signup">
+          <button onClick={handleLogout} className="logout-btn">Logout</button>
+          </div>
+        </div>
+      );
+    }
 
     return (
-    <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-logo">
-          <a href="/">ProjectTracker</a>
+          <Link to="/">ProjectTracker</Link>
         </div>
         <ul className="navbar-links">
+          <li><a href="#about">About</a></li>
           <li><a href="#features">Features</a></li>
           <li><a href="#testimonials">Testimonials</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#contact">Contact</a></li>
         </ul>
         <div className="navbar-signup">
-          <a href="/signup-login" className="signup-btn">Sign Up / Login</a>
+          <Link to="/signup-login" className="signup-btn">Sign Up / Login</Link>
         </div>
       </div>
+    );
+  };
+
+  return (
+    <nav className="navbar">
+      {renderNavbarContent()}
     </nav>
-     );
+  );
 };
 
 export default Navbar;

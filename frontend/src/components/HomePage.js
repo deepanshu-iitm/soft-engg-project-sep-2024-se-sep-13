@@ -9,31 +9,31 @@ const HomePage = () => {
         <div className="hero-content">
           <h1>Welcome to ProjectTracker</h1>
           <p>Empowering instructors to effectively manage and monitor student progress in software projects.</p>
-          <button className="cta-button">Get Started</button>
+          <a href="/signup-login"><button className="cta-button">Get Started</button></a>
         </div>
       </header>
       <main>
-      <section className="about">
-  <div className="about-content">
-    <div className="about-text">
-      <h2>About ProjectTracker</h2>
-      <p>
-        ProjectTracker is a comprehensive web application designed to simplify project management for software development courses. 
-        It enables instructors to easily define project milestones, track student progress via GitHub, and use AI to provide real-time feedback 
-        on submitted documents. With ProjectTracker, managing large classes and promoting student success is easier than ever.
-      </p>
-      <p>
-        This tool empowers educators to focus on mentoring, while the system takes care of tracking and analysis. 
-        Streamline the process of project-based learning and ensure timely interventions when students need them most.
-      </p>
-    </div>
-    <div className="about-image">
-      <img src="/images/project-tracking.png" alt="Project Tracking Illustration" />
-    </div>
-  </div>
-</section>
+        <section className="about" id="about">
+          <div className="about-content">
+            <div className="about-text">
+              <h2>About ProjectTracker</h2>
+              <p>
+                ProjectTracker is a comprehensive web application designed to simplify project management for software development courses. 
+                It enables instructors to easily define project milestones, track student progress via GitHub, and use AI to provide real-time feedback 
+                on submitted documents. With ProjectTracker, managing large classes and promoting student success is easier than ever.
+              </p>
+              <p>
+                This tool empowers educators to focus on mentoring, while the system takes care of tracking and analysis. 
+                Streamline the process of project-based learning and ensure timely interventions when students need them most.
+              </p>
+            </div>
+            <div className="about-image">
+              <img src="/images/project-tracking.png" alt="Project Tracking Illustration" />
+            </div>
+          </div>
+        </section>
 
-        <section className="features">
+        <section className="features" id="features">
           <h2>Transforming Project Management in Education</h2>
           <div className="feature-grid">
             <div className="feature-item">
@@ -68,7 +68,8 @@ const HomePage = () => {
             </div>
           </div>
         </section>
-        <section className="how-it-works">
+        
+        <section className="how-it-works" id="how-it-works">
           <h2>How It Works</h2>
           <div className="how-it-works-grid">
             <div className="step">
@@ -97,16 +98,17 @@ const HomePage = () => {
             </div>
           </div>
         </section>
-        <section className="testimonials">
+        
+        <section className="testimonials" id="testimonials">
           <h2>What Educators Are Saying</h2>
           <div className="testimonial-grid">
             <div className="testimonial-item">
-              <p>"ProjectTracker has revolutionized how I manage student projects. It's an indispensable tool for any CS educator. blah blah blah...."</p>
-              <cite>- Blaher 1</cite>
+              <p>"ProjectTracker has revolutionized how I manage student projects. It's an indispensable tool for any CS educator....."</p>
+              <cite>- person 1</cite>
             </div>
             <div className="testimonial-item">
-              <p>"The AI-powered insights have helped me identify struggling students early, allowing for timely interventions.blah blah blah..."</p>
-              <cite>- Blaher 2</cite>
+              <p>"The AI-powered insights have helped me identify struggling students early, allowing for timely interventions...."</p>
+              <cite>- person 2</cite>
             </div>
           </div>
         </section>
