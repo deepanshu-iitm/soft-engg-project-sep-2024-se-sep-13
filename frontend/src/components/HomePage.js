@@ -2,7 +2,41 @@ import React from 'react';
 import { FaChalkboardTeacher, FaGithub, FaRobot, FaChartLine, FaClipboardList } from 'react-icons/fa';
 import './HomePage.css';
 
+const teamMembers = [
+  {
+    name: 'Abijeet',
+    email: '21f1003267@ds.study.iitm.ac.in',
+    photo: '/images/blank.jpg'
+  },
+  {
+    name: 'Aditya',
+    email: '22f1000873@ds.study.iitm.ac.in',
+    photo: '/images/blank.jpg'
+  },
+  {
+    name: 'Deepanshu',
+    email: '21f3001217@ds.study.iitm.ac.in',
+    photo: '/images/deepanshu.jpeg'
+  },
+  {
+    name: 'Himanshu',
+    email: '21f3001746@ds.study.iitm.ac.in',
+    photo: '/images/blank.jpg'
+  },
+  {
+    name: 'Prachi',
+    email: '21f2001019@ds.study.iitm.ac.in',
+    photo: '/images/blank.jpg'
+  },
+  {
+    name: 'Saarthak',
+    email: '21f3001154@ds.study.iitm.ac.in',
+    photo: '/images/blank.jpg'
+  }
+];
+
 const HomePage = () => {
+  
   return (
     <div className="home-page">
       <header className="hero">
@@ -12,6 +46,30 @@ const HomePage = () => {
           <a href="/signup-login"><button className="cta-button">Get Started</button></a>
         </div>
       </header>
+
+      <div className="team" id="team">
+        <h2>Meet Our Team</h2>
+        <div className="team-carousel">
+          <div className="team-carousel-wrapper">
+            {teamMembers.map((member, index) => (
+              <div className="team-member" key={index}>
+                <img src={member.photo} alt={`${member.name}`} className="team-photo" />
+                <h3>{member.name}</h3>
+                <p>{member.email}</p>
+              </div>
+            ))}
+            {teamMembers.map((member, index) => (
+              <div className="team-member" key={`duplicate-${index}`}>
+                <img src={member.photo} alt={`${member.name}`} className="team-photo" />
+                <h3>{member.name}</h3>
+                <p>{member.email}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+
       <main>
         <section className="about" id="about">
           <div className="about-content">

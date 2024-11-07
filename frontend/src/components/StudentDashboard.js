@@ -1,104 +1,92 @@
-import React, { useEffect, useState } from 'react';
-import { getProjects, getMilestones, getUserProfile, logout } from './apiService'; 
+import React, { useState } from 'react';
+import { FaCalendarAlt, FaGithub, FaCodeBranch } from 'react-icons/fa';
+import MilestoneSubmissionModal from './MilestoneSubmissionModal';
 import './StudentDashboard.css';
 
-const StudentDashboard = () => {
-  const [projects, setProjects] = useState([]);
-  const [milestones, setMilestones] = useState([]);
-  const [githubProgress, setGithubProgress] = useState([]); 
-  const [studentName, setStudentName] = useState('');
+function StudentDashboard() {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const studentName = "Student";
+    const teamName = "Team 13";
+    const milestones = [
+        { id: 1, title: "Milestone 1", status: "Completed", dueDate: "2024-10-01", instructorFeedback: "Excellent work on the code structure and functionality. Keep up the good work!", aiFeedback: "Consider further optimization in milestone 2 for performance and readability improvements." },
+        { id: 2, title: "Milestone 2", status: "Not Submitted", dueDate: "2024-11-01" },
+        { id: 3, title: "Milestone 3", status: "In Progress", dueDate: "2024-12-01" },
+    ];
+    const githubRepo = "https://github.com/team-13/project-repo";
+    const githubActivity = [
+        { type: "Push", description: "2 commits pushed to main", date: "2024-11-03", branch: "main" },
+        { type: "Pull Request", description: "Merged pull request #07", date: "2024-11-02", branch: "feature/new-feature" },
+        { type: "Issue", description: "Created issue #07 - Update README.md", date: "2024-10-31", branch: "" }
+    ];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const userProfile = await getUserProfile();
-      if (userProfile) {
-        setStudentName(userProfile.name);
-      }
-      const projectsData = await getProjects();
-      setProjects(projectsData);
-    };
-    fetchData();
-  }, []);
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
 
-  const handleProjectClick = async (projectId) => {
-    const data = await getMilestones(projectId);
-    setMilestones(data);
-  };
+    const currentDate = new Date();
 
-  const handleLogout = () => {
-    logout();
-    window.location.href = '/signup-login'; 
-  };
+    return (
+        <div className="student-dashboard">
+            <header className="student-dashboard-header">
+                <h1>Welcome, <span>{studentName}</span></h1>
+                <p>Team: {teamName}</p>
+            </header>
 
-  return (
-    <div className="dashboard-container">
-      <header className="dashboard-header">
-        <h1>Welcome, {studentName || 'Student'}</h1> 
-        <p>Track your project milestones and coding progress</p>
-        <button className="logout-btn" onClick={handleLogout}>Logout</button>
-      </header>
+            <section className="student-dashboard-project">
+                <h2>Project Overview</h2>
+                <p>Your project is active. Complete and submit each milestone to contribute to your final assessment..</p>
+                <a href={githubRepo} target="_blank" rel="noopener noreferrer" className="github-link">
+                    <FaGithub />&nbsp; GitHub Repository
+                </a>
+            </section>
 
-      <div className="dashboard-content">
-        <aside className="dashboard-sidebar">
-          <ul>
-            <li><a href="#milestones">Milestones</a></li>
-            <li><a href="#github-progress">GitHub Progress</a></li>
-            <li><a href="#tasks">Tasks</a></li>
-          </ul>
-        </aside>
+            <section className="student-dashboard-milestones">
+                <h2>Milestones</h2>
+                <div className="milestone-grid">
+                    {milestones.map((milestone) => {
+                        const isPastDue = new Date(milestone.dueDate) < currentDate && milestone.status !== "Completed";
+                        return (
+                            <div key={milestone.id} className={`milestone-card ${milestone.status.toLowerCase().replace(" ", "-")}`}>
+                                <h3>{milestone.title}</h3>
+                                <span className={`status-tag ${milestone.status.toLowerCase().replace(" ", "-")}`}>{milestone.status}</span>
+                                <p className="due-date"><FaCalendarAlt />&nbsp; Due: {milestone.dueDate}</p>
+                                {milestone.status === "Completed" ? (
+                                    <div className="feedback-section">
+                                        <p><strong>Instructor Feedback:</strong> {milestone.instructorFeedback}</p>
+                                        <p><strong>AI Feedback:</strong> {milestone.aiFeedback}</p>
+                                    </div>
+                                ) : (
+                                    !isPastDue && (
+                                        <button onClick={openModal} className="submit-button">Submit Milestone</button>
+                                    )
+                                )}
+                                {isPastDue && <p className="due-warning">Past Due</p>}
+                            </div>
+                        );
+                    })}
+                </div>
+            </section>
 
-        <main className="dashboard-main">
-          <section id="milestones" className="milestone-section">
-            <h2>Your Project Milestones</h2>
-            {projects.map(project => (
-              <div key={project.id} onClick={() => handleProjectClick(project.id)} className="project-card">
-                <h3>{project.name}</h3>
-                <p>Click to view milestones</p>
-              </div>
-            ))}
-            {milestones.length > 0 ? (
-              <ul>
-                {milestones.map(milestone => (
-                  <li key={milestone.id}>
-                    {milestone.name} - {milestone.deadline}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No milestones available.</p>
-            )}
-          </section>
+            <section className="student-dashboard-activity">
+                <h2>GitHub Activity</h2>
+                <ul className="github-activity-list">
+                    {githubActivity.map((activity, index) => (
+                        <li key={index} className="activity-item">
+                            <div className="activity-details">
+                                <FaCodeBranch className="activity-icon" />
+                                <div>
+                                    <p className="activity-description"><strong>{activity.type}:</strong> {activity.description}</p>
+                                    <p className="activity-branch">Branch: {activity.branch || "N/A"}</p>
+                                </div>
+                            </div>
+                            <span className="activity-date">{activity.date}</span>
+                        </li>
+                    ))}
+                </ul>
+            </section>
 
-          <section id="github-progress" className="github-section">
-            <h2>GitHub Progress</h2>
-            {/* Render GitHub progress here */}
-            <ul>
-              {githubProgress.length > 0 ? (
-                githubProgress.map(progress => (
-                  <li key={progress.id}>
-                    {progress.commitMessage} - {progress.date}
-                  </li>
-                ))
-              ) : (
-                <p>No GitHub progress found.</p>
-              )}
-            </ul>
-          </section>
-
-          <section id="tasks" className="tasks-section">
-            <h2>Your Tasks</h2>
-            {/* Task Summary or To-Do List */}
-          </section>
-
-          <section id="notifications" className="notifications-section">
-            <h2>Notifications</h2>
-            <p>No new notifications.</p>
-            {/* Implement notification system */}
-          </section>
-        </main>
-      </div>
-    </div>
-  );
-};
+            <MilestoneSubmissionModal isOpen={isModalOpen} onClose={closeModal} />
+        </div>
+    );
+}
 
 export default StudentDashboard;

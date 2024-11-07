@@ -19,6 +19,7 @@
   font-size: 3.5rem;
   margin-bottom: 1rem;
   font-weight: 700;
+  color: #fff;
 }
 
 .hero p {
@@ -159,3 +160,67 @@
   color: #333; 
   font-size: 1rem; 
 }
+
+.team {
+  padding: 4rem 2rem;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.team h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.team-carousel {
+  overflow: hidden;
+  position: relative;
+}
+
+.team-carousel-wrapper {
+  display: flex;
+  gap: 2rem;
+  animation: scroll 45s linear infinite;
+}
+
+.team-member {
+  flex: 0 0 200px;
+  text-align: center;
+}
+
+.team-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+.team-member h3 {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.team-member p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.team-member:hover .team-photo {
+  transform: scale(1.05); 
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+

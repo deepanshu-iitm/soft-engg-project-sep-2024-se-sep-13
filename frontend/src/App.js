@@ -4,8 +4,11 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomePage from './components/HomePage';
 import AuthPage from './components/AuthPage';
-import StudentDashboard from './components/StudentDashboard';
 import InstructorDashboard from './components/InstructorDashboard';
+import StudentDashboard from './components/StudentDashboard';
+import CreateProject from './components/CreateProject';
+import ProjectDetail from './components/ProjectDetail';
+import TeamProgress from './components/TeamProgress';
 import './App.css';
 
 const App = () => {
@@ -16,9 +19,11 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/signup-login" element={<AuthPage />} />
-          <Route path="/Student-dashboard" element={<StudentDashboard />} />
-          <Route path="/Instructor-dashboard" element={<InstructorDashboard />} />
-          {/* Add additional routes */}
+          <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
+          <Route path="/student-dashboard" element={<StudentDashboard />} />
+          <Route path="/create-project" element={<CreateProject />} />
+          <Route path="/project-detail/:projectId" element={<ProjectDetail />} />
+          <Route path="/team-progress/:team" element={<TeamProgress />} />
         </Routes>
       </main>
       <Footer />

@@ -50,6 +50,7 @@ body {
     font-size: 1.1rem;
     font-weight: 500;
     font-family: 'Poppins', sans-serif;
+    text-decoration: none;
 }
 
 .navbar-links a {
@@ -85,24 +86,6 @@ body {
     background-color: #388e3c; 
 }
 
-.logout-btn {
-    background-color: #f44336; 
-    color: white;
-    padding: 0.7rem 1.8rem;
-    border-radius: 25px;
-    font-size: 1rem;
-    font-weight: 600;
-    font-family: 'Lato', sans-serif;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    border: none; 
-}
-
-.logout-btn:hover {
-    background-color: #d32f2f; 
-}
-
 @media (max-width: 768px) {
     .navbar-links {
         display: none; 
@@ -112,9 +95,20 @@ body {
         margin-left: 0; 
         margin-right: 0; 
     }
+}
+.navbar-home .home-btn {
+    background-color: #0056b3;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Lato', sans-serif;
+    text-decoration: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+}
 
-    .logout-btn {
-        width: 100%;
-        text-align: center;
-    }
+.navbar-home .home-btn:hover {
+    background-color:  #004494;
 }
