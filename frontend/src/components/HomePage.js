@@ -43,7 +43,9 @@ const HomePage = () => {
         <div className="hero-content">
           <h1>Welcome to ProjectTracker</h1>
           <p>Empowering instructors to effectively manage and monitor student progress in software projects.</p>
-          <a href="/signup-login"><button className="cta-button">Get Started</button></a>
+          <a href="/signup-login"><button className="cta-button">Get Started</button></a>&nbsp;
+          <a href="/instructor-dashboard"><button className="cta-button">Instructor</button></a>&nbsp;
+          <a href="/student-dashboard"><button className="cta-button">Student</button></a>
         </div>
       </header>
 
