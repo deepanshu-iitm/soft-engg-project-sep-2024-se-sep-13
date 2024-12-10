@@ -23,7 +23,7 @@ const App = () => {
           <Route path="/student-dashboard" element={<StudentDashboard />} />
           <Route path="/create-project" element={<CreateProject />} />
           <Route path="/project-detail/:projectId" element={<ProjectDetail />} />
-          <Route path="/team-progress/:team" element={<TeamProgress />} />
+          <Route path="/team-progress/:teamId" element={<TeamProgress />} />
         </Routes>
       </main>
       <Footer />

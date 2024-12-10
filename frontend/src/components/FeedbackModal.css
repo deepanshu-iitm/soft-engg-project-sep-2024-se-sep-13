@@ -130,3 +130,15 @@
 .submit-feedback-button:hover {
     background-color: #218838;
 }
+
+.view-document-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+.view-document-button:hover {
+    background-color: #45a049;
+}

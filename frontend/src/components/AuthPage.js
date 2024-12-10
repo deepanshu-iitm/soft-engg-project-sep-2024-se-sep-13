@@ -24,34 +24,33 @@ const AuthPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (isSignup) {
-        const response = await axios.post('http://127.0.0.1:5000/api/register', {
-          name,
-          email,
-          password,
-          role,
-        });
-        alert(response.data.message); 
-      } else {
-        const response = await axios.post('http://127.0.0.1:5000/api/login', {
-          email,
-          password,
-        });
-        const { access_token, role } = response.data;
-
-        localStorage.setItem('token', access_token);
-
-        if (role === 'instructor') {
-          navigate('/instructor-dashboard');
-        } else if (role === 'student') {
-          navigate('/student-dashboard');
+        if (isSignup) {
+            const response = await axios.post('http://127.0.0.1:5000/auth/register', {
+                username: name,  
+                email,
+                password,
+                role,
+            });
+            alert(response.data.message); 
+        } else {
+            const response = await axios.post('http://127.0.0.1:5000/auth/login', {
+                email,
+                password,
+            });
+            const { token, role } = response.data; 
+            localStorage.setItem('token', token);
+            if (role === 'instructor') {
+                navigate('/instructor-dashboard');
+            } else if (role === 'student') {
+                navigate('/student-dashboard');
+            }
         }
-      }
     } catch (error) {
-      console.error('Authentication failed', error);
-      alert('Authentication failed. Please check your credentials.');
+        console.error('Authentication failed', error.response?.data || error.message);
+        alert(error.response?.data?.error || 'Authentication failed. Please try again.');
     }
-  };
+};
+
 
   const handleGithubLogin = (e) => {
     e.preventDefault();
@@ -118,11 +117,6 @@ const AuthPage = () => {
         </form>
 
         <div className="divider">OR</div>
-
-        <button className="github-btn" onClick={handleGithubLogin}>
-          <FaGithub className="github-icon" />
-          {isSignup ? 'Sign Up with GitHub' : 'Login with GitHub'}
-        </button>
 
         <p className="toggle-link">
           {isSignup ? 'Already have an account?' : 'Don’t have an account?'}{' '}

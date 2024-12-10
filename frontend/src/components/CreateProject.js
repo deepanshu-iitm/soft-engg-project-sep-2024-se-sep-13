@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CreateProject.css';
 import { FaPlus, FaTrash } from 'react-icons/fa';
+import API from './api';
 
 function CreateProject() {
     const navigate = useNavigate();
@@ -24,9 +25,29 @@ function CreateProject() {
         setMilestones(newMilestones);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        navigate('/instructor-dashboard');
+    
+        try {
+            
+            const response = await API.post('/instructor/projects', { title, description });
+            const projectId = response.data.project_id;
+    
+            
+            for (const milestone of milestones) {
+                await API.post(`/instructor/projects/${projectId}/milestones`, {
+                    title: milestone.title,
+                    description: milestone.description,
+                    due_date: milestone.dueDate,
+                });
+            }
+    
+            alert('Project and milestones created successfully!');
+            navigate('/instructor-dashboard');
+        } catch (error) {
+            console.error('Error creating project:', error.response.data);
+            alert('Failed to create project. Please try again.');
+        }
     };
 
     return (

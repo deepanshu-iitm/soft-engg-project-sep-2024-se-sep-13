@@ -1,19 +1,70 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaPlus, FaCalendarAlt, FaUsers, FaEdit, FaTrashAlt } from 'react-icons/fa';
 import './InstructorDashboard.css';
+import API from './api';
+import EditProjectPopup from './EditProjectPopup';
 
 function InstructorDashboard() {
     const navigate = useNavigate();
     const [instructorName, setInstructorName] = useState("Instructor");
-    const [projects, setProjects] = useState([
-        { id: 1, title: "", description: "", dueDate: "", teams: ["Team 1", "Team 2"] },
-        { id: 2, title: "", description: "", dueDate: "", teams: ["Team 3"] },
-        { id: 3, title: "", description: "", dueDate: "", teams: ["Team 4", "Team 5", "Team 6"] }
-    ]);
+    const [projects, setProjects] = useState([]);
+    const [editingProject, setEditingProject] = useState(null);
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const response = await API.get('/instructor/projects');
+                if (response.data && Array.isArray(response.data)) {
+                    setProjects(response.data); 
+                } else {
+                    console.warn("Unexpected data format from API:", response.data);
+                    setProjects([]); 
+                }
+            } catch (error) {
+                console.error('Error fetching projects:', error.response?.data || error.message);
+                setProjects([]); 
+            }
+        };
+
+        fetchProjects();
+    }, []);
+
+    const handleCreateProject = () => {
+        navigate('/create-project');
+    };
 
     const handleProjectClick = (projectId) => {
         navigate(`/project-detail/${projectId}`);
+    };
+
+    const handleDeleteProject = async (projectId) => {
+        if (window.confirm("Are you sure you want to delete this project?")) {
+            try {
+                await API.delete(`/instructor/projects/${projectId}`);
+                setProjects((prevProjects) => prevProjects.filter((project) => project.id !== projectId));
+                alert('Project deleted successfully.');
+            } catch (error) {
+                console.error('Error deleting project:', error.response?.data || error.message);
+                alert('Failed to delete project.');
+            }
+        }
+    };
+
+    if (projects === null) {
+        return <div>Loading projects...</div>;
+    }
+
+    const handleEditProject = (project) => {
+        setEditingProject(project);
+    };
+
+    const handleProjectUpdated = (updatedProject) => {
+        setProjects((prev) =>
+            prev.map((project) => 
+                project.id === updatedProject.id ? updatedProject : project
+            )
+        );
     };
 
     return (
@@ -35,22 +86,24 @@ function InstructorDashboard() {
                             </h3>
                             <p className="project-description-instructor">{project.description || "Description goes here."}</p>
                             <div className="project-meta">
-                                <span><FaCalendarAlt /> {project.dueDate || "Upcoming Milestone Deadline"}</span>
+                                <span><FaCalendarAlt /> {project.due_date ? `Next Milestone: ${new Date(project.due_date).toLocaleDateString()}` : "No upcoming milestone"}</span>
                             </div>
-                            <div className="project-teams">
-                                <FaUsers /> Teams:{" "}
-                                {project.teams.map((team, index) => (
-                                    <span key={index} className="team-name-instructor">{team}</span>
-                                ))}
-                            </div>
+
                             <div className="project-actions">
-                                <FaEdit className="action-icon-instructor" title="Edit Project" />
-                                <FaTrashAlt className="action-icon-instructor" title="Delete Project" />
+                                <FaEdit className="action-icon-instructor" title="Edit Project" onClick={() => handleEditProject(project)}/>
+                                <FaTrashAlt className="action-icon-instructor" title="Delete Project" onClick={() => handleDeleteProject(project.id)}/>
                             </div>
                         </div>
                     ))}
                 </div>
             </section>
+            {editingProject && (
+                <EditProjectPopup
+                    project={editingProject}
+                    onClose={() => setEditingProject(null)}
+                    onSave={handleProjectUpdated}
+                />
+            )}
         </div>
     );
 }

@@ -1,46 +1,70 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 import { FaCheckCircle, FaExclamationCircle, FaCalendarAlt, FaGithub, FaComments, FaUsers, FaCodeBranch } from 'react-icons/fa';
-import FeedbackModal from './FeedbackModal'
+import FeedbackModal from './FeedbackModal';
 import './TeamProgress.css';
+import API from './api';
 
 function TeamProgress() {
     const navigate = useNavigate();
+    const { teamId } = useParams();  
     const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
     const [selectedMilestone, setSelectedMilestone] = useState(null);
-    const [teamDetails] = useState({
-        teamName: "Team 13",
-        members: [
-            { name: "Deepanshu Pathak", email: "21f3001217@ds.study.iitm.ac.in" },
-            { name: "Saarthak Saran", email: "21f3001154@ds.study.iitm.ac.in" },
-            { name: "Prachi Tiwari", email: "21f2001019@ds.study.iitm.ac.in" },
-            { name: "Aditya Singh", email: "22f1000873@ds.study.iitm.ac.in" },
-            { name: "Abhijeet Garg", email: "21f1003267@ds.study.iitm.ac.in" },
-            { name: "Himanshu Kumar", email: "21f3001746@ds.study.iitm.ac.in" }
-        ],
-        githubRepo: "https://github.com/team-13/project-repo",
-    });
 
-    const [milestones] = useState([
-        { id: 1, title: "Milestone 1", status: "Completed", dueDate: "2024-10-01" },
-        { id: 2, title: "Milestone 2", status: "Not Submitted", dueDate: "2024-11-01" },
-        { id: 3, title: "Milestone 3", status: "In Progress", dueDate: "2024-12-01" }
-    ]);
+    const [teamDetails, setTeamDetails] = useState(null);
+    const [milestones, setMilestones] = useState([]);
+    const [githubActivity, setGithubActivity] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const [githubActivity] = useState([
-        { type: "Push", description: "2 commits pushed to main", date: "2024-11-03", branch: "main" },
-        { type: "Pull Request", description: "Merged pull request #07", date: "2024-11-02", branch: "feature/new-feature" },
-        { type: "Issue", description: "Created issue #07 - Update README.md", date: "2024-10-31", branch: "" }
-    ]);
+    useEffect(() => {
+        setLoading(true);
+        setError(null);
+        API.get(`/teams/${teamId}/progress`, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        })
+            .then(response => {
+                const data = response.data;
+                console.log("API Response:", data);  
+    
+                setTeamDetails({
+                    teamName: data.teamName,
+                    members: data.members,
+                    githubRepo: data.githubRepo,
+                    projectId: data.projectId, 
+                });
+                setMilestones(data.milestones);
+                setGithubActivity(data.githubActivity);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching team progress:", error);
+                setError("Failed to load team progress");
+                setLoading(false);
+            });
+    }, [teamId]);
+    
+    
 
     const openFeedbackModal = (milestone) => {
-        setSelectedMilestone(milestone);
-        setIsFeedbackModalOpen(true);
+        console.log("Opening Feedback Modal for milestone:", milestone);  
+        console.log("Project ID in TeamProgress:", teamDetails?.projectId);  
+    
+        if (milestone && teamDetails?.projectId) {
+            setSelectedMilestone(milestone);
+            setIsFeedbackModalOpen(true);
+        } else {
+            console.error("Milestone or Project ID is missing!");
+        }
     };
 
     const closeFeedbackModal = () => {
         setIsFeedbackModalOpen(false);
     };
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>;
 
     return (
         <div className="team-progress-container">
@@ -64,32 +88,30 @@ function TeamProgress() {
             </section>
 
             <section className="milestone-section">
-    <h2>Milestones</h2>
-    <div className="milestone-grid">
-        {milestones.map((milestone) => (
-            <div key={milestone.id} className={`milestone-card ${milestone.status.toLowerCase().replace(" ", "-")}`}>
-                <h3>{milestone.title}</h3>
-                <div className="milestone-details">
-                    {milestone.status === "Completed" ? (
-                        <span><FaCheckCircle className="completed-icon" /> {milestone.status}</span>
-                    ) : milestone.status === "Not Submitted" ? (
-                        <span className="not-submitted"><FaExclamationCircle /> {milestone.status}</span>
-                    ) : (
-                        <div>
-                            <span className="in-progress"><FaExclamationCircle className="in-progress-icon" /> {milestone.status}</span>
+                <h2>Milestones</h2>
+                <div className="milestone-grid">
+                    {milestones.map((milestone) => (
+                        <div key={milestone.id} className={`milestone-card ${milestone.status.toLowerCase().replace(" ", "-")}`}>
+                            <h3>{milestone.title}</h3>
+                            <div className="milestone-details">
+                                {milestone.status === "Completed" ? (
+                                    <span><FaCheckCircle className="completed-icon" /> {milestone.status}</span>
+                                ) : milestone.status === "Not Submitted" ? (
+                                    <span className="not-submitted"><FaExclamationCircle /> {milestone.status}</span>
+                                ) : (
+                                    <span className="in-progress"><FaExclamationCircle className="in-progress-icon" /> {milestone.status}</span>
+                                )}
+                                {milestone.status !== "Completed" && (
+                                    <span><FaCalendarAlt className="due-icon" /> Due: {milestone.dueDate}</span>
+                                )}
+                            </div>
+                            <button className="feedback-button" onClick={() => openFeedbackModal(milestone)}>
+                                <FaComments /> Feedback
+                            </button>
                         </div>
-                    )}
-                    {milestone.status !== "Completed" && (
-                        <span><FaCalendarAlt className="due-icon" /> Due: {milestone.dueDate}</span>
-                    )}
+                    ))}
                 </div>
-                <button className="feedback-button" onClick={() => openFeedbackModal(milestone)}>
-                    <FaComments /> Feedback
-                </button>
-            </div>
-        ))}
-    </div>
-</section>
+            </section>
 
             <section className="github-activity-section">
                 <h2>Recent GitHub Activity</h2>
@@ -113,8 +135,8 @@ function TeamProgress() {
                 isOpen={isFeedbackModalOpen}
                 onClose={closeFeedbackModal}
                 milestone={selectedMilestone}
+                projectId={teamDetails?.projectId}
             />
-
         </div>
     );
 }
