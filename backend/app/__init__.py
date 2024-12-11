@@ -16,7 +16,7 @@ def create_app():
 
     init_db(app)
     jwt.init_app(app)
-    CORS(app)
+    CORS(app, origins=["https://project-tracker-13.vercel.app"])
     register_routes(app)
 
     @app.route('/')
