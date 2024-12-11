@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FaGithub } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API from './api';
 
 import './AuthPage.css';
 
@@ -25,7 +26,7 @@ const AuthPage = () => {
     e.preventDefault();
     try {
         if (isSignup) {
-            const response = await axios.post('/auth/register', {
+            const response = await API.post('/auth/register', {
                 username: name,  
                 email,
                 password,
@@ -33,7 +34,7 @@ const AuthPage = () => {
             });
             alert(response.data.message); 
         } else {
-            const response = await axios.post('/auth/login', {
+            const response = await API.post('/auth/login', {
                 email,
                 password,
             });
