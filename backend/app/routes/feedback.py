@@ -30,7 +30,7 @@ def get_submission(project_id, milestone_id):
     if not submission:
         return jsonify({"error": "No submission found for this milestone"}), 404
 
-    file_url = f"http://127.0.0.1:5000/submission_folder/{submission.file_url}"
+    file_url = f"https://soft-engg-project-sep-2024-se-sep-13-1.onrender.com/submission_folder/{submission.file_url}"
 
     submission_data = {
         "content": submission.comments,
