@@ -25,7 +25,7 @@ const AuthPage = () => {
     e.preventDefault();
     try {
         if (isSignup) {
-            const response = await axios.post('http://127.0.0.1:5000/auth/register', {
+            const response = await axios.post('/auth/register', {
                 username: name,  
                 email,
                 password,
@@ -33,7 +33,7 @@ const AuthPage = () => {
             });
             alert(response.data.message); 
         } else {
-            const response = await axios.post('http://127.0.0.1:5000/auth/login', {
+            const response = await axios.post('/auth/login', {
                 email,
                 password,
             });
