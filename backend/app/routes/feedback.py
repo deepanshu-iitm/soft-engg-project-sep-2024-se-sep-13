@@ -42,8 +42,6 @@ def get_submission(project_id, milestone_id):
 
     return jsonify({"submission": submission_data}), 200
 
-
-
 @feedback_bp.route('/instructor/projects/<int:project_id>/milestones/<int:milestone_id>/feedback', methods=['POST'])
 @jwt_required()
 def add_manual_feedback(project_id, milestone_id):
