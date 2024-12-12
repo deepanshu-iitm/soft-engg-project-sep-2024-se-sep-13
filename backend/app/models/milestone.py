@@ -12,4 +12,4 @@ class Milestone(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     submitted_on = db.Column(db.DateTime, nullable=True)
 
-    submission = db.relationship('Submission', backref='milestone', uselist=False)
+    submission = db.relationship('Submission', backref='milestone', lazy=True)
