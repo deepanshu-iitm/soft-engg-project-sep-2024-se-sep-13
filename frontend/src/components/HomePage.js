@@ -4,14 +4,14 @@ import './HomePage.css';
 
 const teamMembers = [
   {
-    name: 'Abijeet',
+    name: 'Abhijeet',
     email: '21f1003267@ds.study.iitm.ac.in',
     photo: '/images/blank.jpg'
   },
   {
     name: 'Aditya',
     email: '22f1000873@ds.study.iitm.ac.in',
-    photo: '/images/blank.jpg'
+    photo: '/images/aditya.jpeg'
   },
   {
     name: 'Deepanshu',
@@ -26,12 +26,12 @@ const teamMembers = [
   {
     name: 'Prachi',
     email: '21f2001019@ds.study.iitm.ac.in',
-    photo: '/images/blank.jpg'
+    photo: '/images/prachi.jpeg.jpeg'
   },
   {
     name: 'Saarthak',
     email: '21f3001154@ds.study.iitm.ac.in',
-    photo: '/images/blank.jpg'
+    photo: '/images/saarthak.jpeg'
   }
 ];
 
